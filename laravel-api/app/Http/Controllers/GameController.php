@@ -69,7 +69,10 @@ class GameController extends Controller
     public function solve($id, Request $request){
         if($this->checking_the_solution($request['motions'])){
             $game = Game::findOrFail($id);
-            $game->update(['time' => \Carbon\Carbon::parse($request['seconds'])->format('H:i:s')]);
+            $game->update([
+                'time' => \Carbon\Carbon::parse($request['seconds'])->format('H:i:s'),
+                'motions' => json_encode($request['motions'])
+                ]);
             return response()->json([
                 'game' => $game,
                 'number_of_moves' => count($request['motions']) - 1
