@@ -29,7 +29,7 @@ class UserController extends Controller
     $user = User::where([
       ['email', '=', $data['email']],
     ])->first();
-    if (! Hash::check($data['password'], $user->password)) {
+    if ($user && !Hash::check($data['password'], $user->password)) {
       $user = null;
     }
     if(!$user){
