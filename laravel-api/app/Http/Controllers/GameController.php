@@ -49,13 +49,6 @@ class GameController extends Controller
     public function store(Request $request)
     {
         $user = $request['user'];
-        // $user_db = User::where([
-        //     ['email', '=', $user['email']],
-        //     ['id', '=', $user['id']]
-        // ])->first();
-        // if(!$user_db){
-        //     return response()->json([],403); 
-        // }
         if(!$request['field']){
             $field = $this->shuffle_right(range(0,14));
             $field []= '';
@@ -74,14 +67,6 @@ class GameController extends Controller
     }
 
     public function solve($id, Request $request){
-        // $user = $request['user'];
-        // $user_db = User::where([
-        //     ['email', '=', $user['email']],
-        //     ['id', '=', $user['id']]
-        // ])->first();
-        // if(!$user_db){
-        //     return response()->json([],403); 
-        // }
         if($this->checking_the_solution($request['motions'])){
             $game = Game::findOrFail($id);
             $game->update(['time' => \Carbon\Carbon::parse($request['seconds'])->format('H:i:s')]);
