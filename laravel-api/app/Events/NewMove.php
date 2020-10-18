@@ -15,15 +15,17 @@ class NewMove implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $field;
+    public $seconds;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($field)
+    public function __construct($field, $seconds)
     {
         $this->field = $field;
+        $this->seconds = $seconds;
     }
 
     /**

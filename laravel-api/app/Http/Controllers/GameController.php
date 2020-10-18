@@ -20,7 +20,7 @@ class GameController extends Controller
 
     public function new_move(Request $request){
         $field = $this->field_empty_cell($request['field']);
-        event(new NewMove($field));
+        event(new NewMove($field, $request['seconds']));
     }
 
     public function start_game(Request $request){
