@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\{
     Game,
-    User
+    User,
+    Motion
 };
 
 use App\Events\{
@@ -57,7 +58,8 @@ class GameController extends Controller
             $field = $this->field_empty_cell($request['field']);
         }
         $game = Game::create([
-            'user_id' => $user['id']
+            'user_id' => $user['id'],
+            'starting_position' => json_encode($field)
         ]);
 
         return response()->json([
@@ -70,9 +72,16 @@ class GameController extends Controller
         if($this->checking_the_solution($request['motions'])){
             $game = Game::findOrFail($id);
             $game->update([
-                'time' => \Carbon\Carbon::parse($request['seconds'])->format('H:i:s'),
-                'motions' => json_encode($request['motions'])
+                'time' => \Carbon\Carbon::parse($request['seconds'])->format('H:i:s')
                 ]);
+            $motions_db = [];
+            for ($i=1; $i < count($request['motions']); $i++) { 
+                $motions_db []= [
+                    'game_id' => $id,
+                    'motion' => $request['motions'][$i],
+                ];
+            }
+            Motion::insert($motions_db);
             return response()->json([
                 'game' => $game,
                 'number_of_moves' => count($request['motions']) - 1

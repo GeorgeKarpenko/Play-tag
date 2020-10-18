@@ -18,7 +18,7 @@ class CreateGamesTable extends Migration
             $table->unsignedBigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->time('time')->nullable()->default(NULL);
-            $table->json('motions')->nullable()->default(null);
+            $table->json('starting_position');
             $table->timestamps();
         });
     }
