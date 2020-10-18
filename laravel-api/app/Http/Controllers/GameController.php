@@ -18,14 +18,14 @@ use App\Events\{
 class GameController extends Controller
 {
 
-    public function new_move(Request $request){
+    public function new_move($user_id, $game_id, Request $request){
         $field = $this->field_empty_cell($request['field']);
-        event(new NewMove($field, $request['seconds']));
+        event(new NewMove($field, $request['seconds'], $game_id));
     }
 
-    public function start_game(Request $request){
+    public function start_game($user_id, $game_id, Request $request){
         $field = $this->field_empty_cell($request['field']);
-        event(new StartGame($field));
+        event(new StartGame($field, $game_id));
     }
 
     /**

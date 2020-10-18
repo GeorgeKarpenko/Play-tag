@@ -16,16 +16,18 @@ class NewMove implements ShouldBroadcast
 
     public $field;
     public $seconds;
+    public $game_id;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($field, $seconds)
+    public function __construct($field, $seconds, $game_id)
     {
         $this->field = $field;
         $this->seconds = $seconds;
+        $this->game_id = $game_id;
     }
 
     /**

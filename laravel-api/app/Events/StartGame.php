@@ -15,15 +15,17 @@ class StartGame implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $field;
+    public $game_id;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($field)
+    public function __construct($field, $game_id)
     {
         $this->field = $field;
+        $this->game_id = $game_id;
     }
 
     /**
