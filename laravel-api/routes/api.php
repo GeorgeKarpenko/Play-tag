@@ -20,6 +20,7 @@ use App\Http\Controllers\GameController;
 
 
 Route::post('user/show', [UserController::class, 'login'])->name('login');
+Route::middleware('auth:api')->post('user/exit', [UserController::class, 'exit'])->name('exit');
 Route::post('user/store', [UserController::class, 'create'])->name('user_create');
 Route::middleware('auth:api')->post('new_move/{user_id}/{game_id}', [GameController::class, 'new_move'])->name('new_move');
 Route::middleware('auth:api')->post('start_game/{user_id}/{game_id}', [GameController::class, 'start_game'])->name('start_game');

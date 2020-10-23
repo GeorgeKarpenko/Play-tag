@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 
+use Laravel\Passport\Token;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserShowRequest;
 use App\Http\Requests\UserCreateRequest;
@@ -26,6 +28,11 @@ class UserController extends Controller
     $user = \Auth::user();
     $user->accessToken = \Auth::user()->createToken('authToken')->accessToken;
     return response()->json($user); 
+  }
+  
+  public function exit(User $user, Request $request)
+  {
+    Token::where('user_id', '=', $request['id'])->delete();
   }
   
   /**
