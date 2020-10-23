@@ -12,25 +12,19 @@ use Illuminate\Support\Facades\Validator;
 class UserController extends Controller
 {
 
-  /**
-   * Show the application dashboard.
-   *
-   * @return \Illuminate\Contracts\Support\Renderable
-   */
-  public function show(UserShowRequest $request)
+  public function login(UserShowRequest $request)
   {
-    $data = $request->only([
+    $login = $request->only([
         'email', 'password'
     ]);
 
-    $user = User::where([
-      ['email', '=', $data['email']],
-    ])->first();
-    if (!$user || !Hash::check($data['password'], $user->password)) {
+    if(!\Auth::attempt($login)){
       return response()->json([
         'errors' => ['email'=> ["Неверно введёт Email или пароль"], 'password'=> ["Неверно введёт Email или пароль"]],
         'message' => "The given data was invalid."],422); 
     }
+    $user = \Auth::user();
+    $user->accessToken = \Auth::user()->createToken('authToken')->accessToken;
     return response()->json($user); 
   }
   
