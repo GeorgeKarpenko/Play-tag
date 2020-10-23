@@ -71,7 +71,7 @@ services:
         image: adminer
         restart: always
         ports:
-            - 6080:8080
+            - 9080:8080
     
     composer:
         image: composer:2.0
